@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SheShield helps organize online-threat reports locally in your browser.">
+  <title>SheShield — From threat to next steps</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="SheShield home"><span class="brand-mark">S</span><span>SheShield</span></a>
+    <div class="privacy-pill"><span class="dot"></span> Local-first demo</div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow">DIGITAL SAFETY ASSISTANT</div>
+      <h1>Turn a difficult moment<br><span>into a clear next step.</span></h1>
+      <p>Organize a message, review a transparent risk assessment, and prepare an editable incident summary — without sending your text to a server in this demo.</p>
+      <div class="hero-note"><span aria-hidden="true">✦</span> Your entered text stays in this browser tab. Don’t use real sensitive information in a public demo.</div>
+    </section>
+
+    <section class="workspace">
+      <div class="panel input-panel">
+        <div class="section-heading"><div><div class="eyebrow">STEP 01</div><h2>Describe the incident</h2></div><span class="step-number">1</span></div>
+        <label for="language">Output language</label>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+        </select>
+        <label for="incidentType">What happened? (optional)</label>
+        <select id="incidentType">
+          <option value="auto">Help me classify it</option>
+          <option value="harassment">Harassment or threats</option>
+          <option value="sextortion">Sextortion or coercion</option>
+          <option value="impersonation">Fake profile / impersonation</option>
+          <option value="doxxing">Personal information exposed</option>
+          <option value="scam">Scam or suspicious demand</option>
+          <option value="stalking">Repeated unwanted contact</option>
+        </select>
+        <label for="message">Paste the message or describe what happened</label>
+        <textarea id="message" rows="7" maxlength="8000" placeholder="Use a fictional example for the demo. Do not paste passwords, intimate images, full addresses, or other highly sensitive information."></textarea>
+        <div class="input-meta"><span id="charCount">0 / 8000</span><span>Processed in this browser</span></div>
+        <label class="upload-label" for="evidenceFile"><span class="upload-icon">＋</span><span><strong>Add an evidence file (optional)</strong><small>File is read locally to calculate a hash; it is not uploaded.</small></span></label>
+        <input id="evidenceFile" type="file" accept="image/*,.pdf,.txt,.eml">
+        <div id="fileInfo" class="file-info" hidden></div>
+        <button id="analyzeBtn" class="primary-btn" type="button">Review incident <span aria-hidden="true">→</span></button>
+        <p class="fineprint">SheShield is a prototype, not an emergency service, legal adviser, or a verified crime-prediction system.</p>
+      </div>
+
+      <div class="panel results-panel" id="resultsPanel" aria-live="polite">
+        <div class="section-heading"><div><div class="eyebrow">STEP 02</div><h2>Your incident workspace</h2></div><span class="step-number">2</span></div>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-illustration"><span>⌁</span><span>✓</span></div>
+          <h3>Your next steps will appear here</h3>
+          <p>Enter a fictional sample message and select <b>Review incident</b> to see the workflow.</p>
+          <button id="loadSampleBtn" class="secondary-btn" type="button">Load safe demo example</button>
+        </div>
+        <div id="results" hidden>
+          <div class="result-top">
+            <div><div class="eyebrow">ASSESSMENT</div><h3 id="threatTitle">Threat assessment</h3></div>
+            <span id="severityBadge" class="severity medium">Review</span>
+          </div>
+          <p id="assessmentSummary" class="summary"></p>
+          <div class="risk-box"><strong>Why this was flagged</strong><p id="reasons"></p><small>Rule-based screening can miss context and produce false positives or negatives. This is not a prediction of physical danger.</small></div>
+          <div class="subsection-heading"><h3>Exposure chain</h3><span class="muted">Potential connections</span></div>
+          <div id="exposureMap" class="exposure-map"></div>
+          <div class="subsection-heading"><h3>Suggested next steps</h3><span class="muted">Review each step</span></div>
+          <ul id="nextSteps" class="steps-list"></ul>
+          <div class="subsection-heading"><h3>Complaint draft</h3><span class="muted">Editable</span></div>
+          <textarea id="complaintDraft" rows="7" aria-label="Editable complaint draft"></textarea>
+          <div class="button-row">
+            <button id="copyComplaintBtn" class="secondary-btn" type="button">Copy draft</button>
+            <button id="downloadReportBtn" class="primary-btn" type="button">Download report</button>
+          </div>
+          <div class="subsection-heading"><h3>Evidence integrity</h3><span class="muted">SHA-256</span></div>
+          <div id="evidenceArea" class="evidence-box"><p>No evidence file selected. A report can still be created from the incident description.</p></div>
+          <button id="verifyBtn" class="secondary-btn full-width" type="button" disabled>Verify selected file again</button>
+          <p class="fineprint">A matching hash shows the file matches the bytes hashed during this session. It does not prove the file is authentic, who created it, or when the incident happened.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div><span class="trust-icon">◈</span><div><strong>Privacy-first demo</strong><p>No app server or database is used.</p></div></div>
+      <div><span class="trust-icon">⌘</span><div><strong>Explainable screening</strong><p>Shows rule matches, not a black-box score.</p></div></div>
+      <div><span class="trust-icon">✓</span><div><strong>User stays in control</strong><p>Review and edit before exporting.</p></div></div>
+    </section>
+    <footer><span>SheShield • Hackathon MVP</span><span>If someone is in immediate danger, contact local emergency services or a trusted person.</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
